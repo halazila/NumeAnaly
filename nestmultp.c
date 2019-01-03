@@ -10,7 +10,7 @@
 	y = c[0] + (x - r[1]) * ( c[1] + (x - r[2]) * ( c[2] + (x - r[3]) * ( c[3] + (x - r[4]) * ( c[4] + ... + (x - r[n-2]) * ( c[n-2] + (x - r[n-1]) * c[n-1])...))))
 */
 
-long nestmultip(int degree, int *carray, int *rarray, int x);
+double nestmultip(int degree, double carray[], double rarray[], double x);
 
 int main(int argc, char *argv[])
 {
@@ -23,38 +23,38 @@ int main(int argc, char *argv[])
 		return 0;
 	}
 	int degree = atoi(argv[2]);
-	int x;
-	int carray[degree + 1], rarray[degree];
+	double x;
+	double carray[degree + 1], rarray[degree];
 	memset(carray, 0, sizeof(carray));
 	memset(rarray, 0, sizeof(rarray));
 	for(int i = 3; i < argc; i++){
 		if(strcmp(argv[i], "-c") == 0){
 			for(int j = 0; j < degree + 1; j++){
-				carray[j] = atoi(argv[i+j+1]);
+				carray[j] = atof(argv[i+j+1]);
 			}
 			i += (degree + 1);
 		}else if(strcmp(argv[i], "-r") == 0){
 			for(int j=0; j < degree; j++){
-				rarray[j] = atoi(argv[i+j+1]);
+				rarray[j] = atof(argv[i+j+1]);
 			}
 			i += degree;
 		}else if(strcmp(argv[i], "-x") == 0){
-			x = atoi(argv[i+1]);
+			x = atof(argv[i+1]);
 			i++;
 		}else{
 			printf("parameter error\n");
 			return 0;
 		}
 	}
-	long res;
+	double res;
 	res = nestmultip(degree, carray, rarray, x);
-	printf("result=%d\n",res);
+	printf("result=%lf\n",res);
 	return 0;
 }
 
-long nestmultip(int degree, int carray[], int rarray[], int x)
+double nestmultip(int degree, double carray[], double rarray[], double x)
 {
-	long y;
+	double y;
 	int len = degree + 1;
 	y = carray[len-1];
 	if(rarray == NULL){
